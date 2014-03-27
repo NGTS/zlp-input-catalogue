@@ -16,7 +16,6 @@ Options:
   --c_thresh <C_THRESH>                     The detection threshold to use when defining the input [default: 2]
   --s_thresh <S_THRESH>                     The detection threshold to use when WCS solving images typically higher than when doing actual photometry [default: 7]
   -n <NPROC>, --nproc <NPROC>               Enable multithreading if you're analysing a lot of files at once
-  -N <NFILES>, --nfiles <NFILES>            Maximum number of files to use in the stack
   --no-wcs                                  Do not solve each image for WCS.  However images must have a solution somehow
   --create-ell                              Produce ds9 region files for the final catalogue
 
@@ -42,17 +41,10 @@ def main():
 
     start = datetime.now()
 
-    # Pick the first N files if argument given
-    nfiles = int(argv['--nfiles']) if argv['--nfiles'] else None
-    logger.info('Creating source catalogue from first %s images...', nfiles)
-
     with NamedTemporaryFile() as tmp:
         name = tmp.name
         with open(argv['--filelist']) as infile:
             for i, line in enumerate(infile):
-                if nfiles and i >= nfiles:
-                    break
-
                 _, cal_stat = line.strip('\n').split(' ')
 
                 if cal_stat == 'ok':
