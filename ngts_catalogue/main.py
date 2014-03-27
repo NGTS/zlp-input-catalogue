@@ -45,7 +45,7 @@ def ensure_cache(filelist, cache_directory_name='catcache'):
             first_filename = infile.readline().strip('\n')
         logger.warning('Using image {}'.format(first_filename))
 
-        with tempfile.NamedTemporaryFile() as tfile:
+        with tempfile.NamedTemporaryFile(prefix='dummywcs-', suffix='.fits') as tfile:
             name = tfile.name
             logger.warning('Extracting sources from first image')
             casutools.imcore(first_filename, name)
