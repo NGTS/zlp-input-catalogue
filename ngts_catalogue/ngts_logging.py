@@ -1,10 +1,11 @@
 import logging
 from functools import partial
+import sys
 
 __all__ = ['logger']
 
 format_string = '%(asctime)s|%(levelname)s|%(module)s:%(lineno)d|pid:%(process)d|%(message)s'
-logging.basicConfig(level=logging.INFO, format=format_string)
+logging.basicConfig(level=logging.INFO, format=format_string, stream=sys.stdout)
 
 class NGTSLogger(object):
     def __init__(self):
