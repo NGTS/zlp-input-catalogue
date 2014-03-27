@@ -33,6 +33,29 @@ from .version import __version__
 from tempfile import NamedTemporaryFile
 import sqlite3
 from datetime import datetime
+import tempfile
+
+def ensure_cache(filelist, cache_directory_name='catcache'):
+    cache_dir = os.path.join(
+            os.getcwd(), cache_directory_name)
+    if os.path.isdir(cache_dir):
+        logger.info('Cache directory found')
+    else:
+        logger.warning("No cache directory found, solving first image to cache data")
+        with open(filelist) as infile:
+            first_filename = infile.readline().strip('\n')
+        logger.warning('Using image {}'.format(first_filename))
+
+        with tempfile.NamedTemporaryFile() as tfile:
+            name = tfile.name
+            logger.warning('Extracting sources from first image')
+            casutools.imcore(first_filename, name)
+
+            tfile.seek(0)
+
+            logger.warning('Finding dummy solution')
+            casutools.wcsfit(first_filename, name)
+
 
 def main():
     argv = docopt(__doc__, version=__version__)
