@@ -12,7 +12,6 @@ Options:
   -h --help                                 Show help text
   -v, --verbose                             Print more text
   -o <OUTNAME>, --outname <OUTNAME>         Specify the name of the output catalog [default: catfile.fits]
-  -s <STACKLIST>, --stacklist <STACKLIST>   The name of the file that stores the names of the images used in the stack [default: stackfilelist]
   --c_thresh <C_THRESH>                     The detection threshold to use when defining the input [default: 2]
   --s_thresh <S_THRESH>                     The detection threshold to use when WCS solving images typically higher than when doing actual photometry [default: 7]
   -n <NPROC>, --nproc <NPROC>               Enable multithreading if you're analysing a lot of files at once
@@ -64,37 +63,21 @@ def main():
 
     start = datetime.now()
 
-    with NamedTemporaryFile() as tmp:
-        name = tmp.name
-        with open(argv['--filelist']) as infile:
-            for i, line in enumerate(infile):
-                _, cal_stat = line.strip('\n').split(' ')
+    name = argv['--filelist']
 
-                if cal_stat == 'ok':
-                    tmp.write(line)
+    if not argv['--no-wcs']:
+        logger.info("Astrometrically solving images")
 
-        tmp.seek(0)
-
-        if not argv['--no-wcs']:
-            logger.info("Astrometrically solving images")
-            extracted_metadata = m_solve_images(name, name, thresh=argv['--s_thresh'],
-                    nproc=int(argv['--nproc']) if argv['--nproc'] else None)
-            Metadata(extracted_metadata).render()
-
-        with open(argv['--stacklist'],'w') as stacklist:
-            for line in tmp:
-                image, _ = line.strip('\n').split(' ')
-
-                status_check = line.strip('\n').split(' ')[1:]
-
-                if all([status == 'ok' for status in status_check]):
-                    stacklist.write(image + '\n')
+        ensure_cache(name)
+        extracted_metadata = m_solve_images(name, name, thresh=argv['--s_thresh'],
+                nproc=int(argv['--nproc']) if argv['--nproc'] else None)
+        Metadata(extracted_metadata).render()
 
     outstack_name = 'outstack.fits'
     outstackconf_name = 'outstackconf.fits'
 
     logger.info('Performing image stack')
-    casutools.imstack(argv['--stacklist'], argv['--confmap'],
+    casutools.imstack(name, argv['--confmap'],
             outstack=outstack_name, outconf=outstackconf_name)
     logger.info('Extracting sources')
     casutools.imcore(outstack_name, argv['--outname'], threshold=argv['--c_thresh'],
