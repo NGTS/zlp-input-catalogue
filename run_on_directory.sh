@@ -44,7 +44,7 @@ perform_analysis() {
         (cd "/tmp/${TMPDIR}"
             echo "Copying files to `pwd`"
             cp `cat ${FILELIST} | cut -d ' ' -f 1` .
-            find . -name '*.fits' | while read fname; do echo "$fname ok"; done > ${NEWFILELIST}
+            find . -name '*.fits' > ${NEWFILELIST}
 
             time ZLP_create_cat.py --confmap ${CONFIDENCE} --filelist ${NEWFILELIST} --verbose --create-ell --nproc ${NPROC}
 
