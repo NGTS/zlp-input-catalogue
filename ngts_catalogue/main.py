@@ -12,7 +12,7 @@ Options:
   -h --help                                 Show help text
   -v, --verbose                             Print more text
   -o <OUTNAME>, --outname <OUTNAME>         Specify the name of the output catalog [default: catfile.fits]
-  --c_thresh <C_THRESH>                     The detection threshold to use when defining the input [default: 2]
+  --c_thresh <C_THRESH>                     The detection threshold to use when defining the input [default: 7]
   --s_thresh <S_THRESH>                     The detection threshold to use when WCS solving images typically higher than when doing actual photometry [default: 7]
   -n <NPROC>, --nproc <NPROC>               Enable multithreading if you're analysing a lot of files at once
   --no-wcs                                  Do not solve each image for WCS.  However images must have a solution somehow
