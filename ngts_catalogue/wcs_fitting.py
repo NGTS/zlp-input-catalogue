@@ -28,7 +28,7 @@ def ensure_valid_wcs(fname):
                 hdu.write_key(key, value)
 
 
-def m_solve_images(filelist, outfile, nproc=None, thresh=20.0):
+def m_solve_images(filelist, nproc=None, thresh=20.0):
     infiles = []
     with open(filelist) as infile:
         for line in infile:

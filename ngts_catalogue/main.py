@@ -69,7 +69,7 @@ def main():
         logger.info("Astrometrically solving images")
 
         ensure_cache(name)
-        extracted_metadata = m_solve_images(name, name, thresh=argv['--s_thresh'],
+        extracted_metadata = m_solve_images(name, thresh=argv['--s_thresh'],
                 nproc=int(argv['--nproc']) if argv['--nproc'] else None)
         Metadata(extracted_metadata).render()
 
