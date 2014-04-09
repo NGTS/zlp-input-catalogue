@@ -28,30 +28,23 @@ def ensure_valid_wcs(fname):
                 hdu.write_key(key, value)
 
 
-def m_solve_images(filelist, outfile, nproc=None, thresh=20.0):
-    infiles = []
+def m_solve_images(filelist, confmap, nproc=None, thresh=7.0):
     with open(filelist) as infile:
-        for line in infile:
-            parts = line.split()
-            image = parts[0]
-            status_checks = parts[1:]
+        infiles = [line.strip('\n') for line in infile]
 
-            if all(status == 'ok' for status in status_checks):
-                infiles.append(image)
-
-    fn = partial(casu_solve, thresh=thresh)
+    fn = partial(casu_solve, thresh=thresh, confmap=confmap)
 
     pool = ThreadPool(nproc)
     return pool.map(fn, infiles)
 
-def casu_solve(casuin, thresh=20):
+def casu_solve(casuin, thresh=7.0, confmap='noconf'):
     logger.info('Solving image {0}'.format(casuin))
     with tempfile.NamedTemporaryFile(dir='.', suffix='.fits', prefix='catalogue.') as catfile:
         catfile_name = catfile.name
 
         ensure_valid_wcs(casuin)
 
-        casutools.imcore(casuin, catfile_name, threshold=thresh)
+        casutools.imcore(casuin, catfile_name, confidence_map=confmap, threshold=thresh)
         catfile.seek(0)
 
         # quick correction factor because the central wcs axis is not always pointed in the right place at the central distortion axis

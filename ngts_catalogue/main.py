@@ -69,8 +69,9 @@ def main():
         logger.info("Astrometrically solving images")
 
         ensure_cache(name)
-        extracted_metadata = m_solve_images(name, name, thresh=argv['--s_thresh'],
-                nproc=int(argv['--nproc']) if argv['--nproc'] else None)
+        extracted_metadata = m_solve_images(name, thresh=argv['--s_thresh'],
+                nproc=int(argv['--nproc']) if argv['--nproc'] else None,
+                confmap=argv['--confmap'])
         Metadata(extracted_metadata).render()
 
     outstack_name = 'outstack.fits'
