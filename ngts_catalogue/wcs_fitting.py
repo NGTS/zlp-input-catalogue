@@ -29,15 +29,8 @@ def ensure_valid_wcs(fname):
 
 
 def m_solve_images(filelist, confmap, nproc=None, thresh=7.0):
-    infiles = []
     with open(filelist) as infile:
-        for line in infile:
-            parts = line.split()
-            image = parts[0]
-            status_checks = parts[1:]
-
-            if all(status == 'ok' for status in status_checks):
-                infiles.append(image)
+        infiles = [line.strip('\n') for line in infile]
 
     fn = partial(casu_solve, thresh=thresh, confmap=confmap)
 
