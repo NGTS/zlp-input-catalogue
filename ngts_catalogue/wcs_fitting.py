@@ -28,7 +28,7 @@ def ensure_valid_wcs(fname):
                 hdu.write_key(key, value)
 
 
-def m_solve_images(filelist, nproc=None, thresh=20.0):
+def m_solve_images(filelist, nproc=None, thresh=7.0):
     infiles = []
     with open(filelist) as infile:
         for line in infile:
@@ -44,7 +44,7 @@ def m_solve_images(filelist, nproc=None, thresh=20.0):
     pool = ThreadPool(nproc)
     return pool.map(fn, infiles)
 
-def casu_solve(casuin, thresh=20):
+def casu_solve(casuin, thresh=7.0):
     logger.info('Solving image {0}'.format(casuin))
     with tempfile.NamedTemporaryFile(dir='.', suffix='.fits', prefix='catalogue.') as catfile:
         catfile_name = catfile.name
