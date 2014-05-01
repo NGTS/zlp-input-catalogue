@@ -15,8 +15,8 @@ Options:
   --c_thresh <C_THRESH>                     The detection threshold to use when defining the input [default: 7]
   --s_thresh <S_THRESH>                     The detection threshold to use when WCS solving images typically higher than when doing actual photometry [default: 7]
   -n <NPROC>, --nproc <NPROC>               Enable multithreading if you're analysing a lot of files at once
-  --no-wcs                                  Do not solve each image for WCS.  However images must have a solution somehow
-  --create-ell                              Produce ds9 region files for the final catalogue
+  --outstack-name <outstack_name>           Output stack file name [default: outstack.fits]
+  --outstackconf-name <outstackconf_name>   Output confidence map name [default: outstackconf.fits]
 
 This is the catalog generation tool, requires a filelist input. need to work on being selective on the files used in input.
 
@@ -74,8 +74,8 @@ def main():
                 confmap=argv['--confmap'])
         Metadata(extracted_metadata).render()
 
-    outstack_name = 'outstack.fits'
-    outstackconf_name = 'outstackconf.fits'
+    outstack_name = argv['--outstack-name']
+    outstackconf_name = argv['--outstackconf-name']
 
     logger.info('Performing image stack')
     casutools.imstack(name, argv['--confmap'],
