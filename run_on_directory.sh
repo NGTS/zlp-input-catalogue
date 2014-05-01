@@ -32,7 +32,7 @@ perform_analysis() {
     PID=$$
 
     (cd ${OUTPUTDIR}
-    time ZLP_create_cat.py --confmap ${CONFIDENCE} --filelist ${FILELIST} --verbose --create-ell --nproc ${NPROC}
+    time ZLP_create_cat.py --confmap ${CONFIDENCE} --filelist ${FILELIST} --verbose --nproc ${NPROC}
     )
 }
 
