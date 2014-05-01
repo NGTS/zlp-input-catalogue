@@ -20,9 +20,7 @@ setup(name=package_name,
             'console_scripts': ['ZLP_create_cat.py = ngts_catalogue.main:main'],
             },
         long_description=open('README.markdown').read(),
-        install_requires=['astropy>=0.3',
-            'fitsio',
+        install_requires=[
             'docopt',
-            'numpy>=1.8',
             ]
         )
