@@ -23,10 +23,7 @@ This is the catalog generation tool, requires a filelist input. need to work on 
 
 from docopt import docopt
 import os
-from tempfile import NamedTemporaryFile
-import sqlite3
 from datetime import datetime
-import tempfile
 
 from . import casutools
 from .ngts_logging import logger
