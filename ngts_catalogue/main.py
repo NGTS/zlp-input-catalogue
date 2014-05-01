@@ -25,7 +25,7 @@ from docopt import docopt
 import os
 from datetime import datetime
 
-from . import casutools
+import casutools
 from .ngts_logging import logger
 from .version import __version__
 
