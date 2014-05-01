@@ -16,6 +16,7 @@ Options:
   -n <NPROC>, --nproc <NPROC>               Enable multithreading if you're analysing a lot of files at once
   --outstack-name <outstack_name>           Output stack file name [default: outstack.fits]
   --outstackconf-name <outstackconf_name>   Output confidence map name [default: outstackconf.fits]
+  --create-ell                              Create a ds9 region file
 
 This is the catalog generation tool, requires a filelist input. need to work on being selective on the files used in input.
 
