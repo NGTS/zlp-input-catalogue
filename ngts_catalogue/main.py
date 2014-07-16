@@ -18,7 +18,7 @@ def main():
 
     name = argv.filelist
 
-    outstack_name = argv.outstack
+    outstack_name = argv.outstack_name
     outstackconf_name = argv.outstackconf_name
 
     logger.info('Performing image stack')
