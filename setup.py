@@ -21,6 +21,5 @@ setup(name=package_name,
             },
         long_description=open('README.markdown').read(),
         install_requires=[
-            'docopt',
             ]
         )
