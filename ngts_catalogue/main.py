@@ -11,23 +11,23 @@ from .version import __version__
 
 def main():
     argv = parse_args()
-    if argv['--verbose'] == True:
+    if argv.verbose == True:
         logger.enable_debug()
 
     start = datetime.now()
 
-    name = argv['--filelist']
+    name = argv.filelist
 
-    outstack_name = argv['--outstack-name']
-    outstackconf_name = argv['--outstackconf-name']
+    outstack_name = argv.outstack
+    outstackconf_name = argv.outstackconf_name
 
     logger.info('Performing image stack')
-    casutools.imstack(name, argv['--confmap'],
+    casutools.imstack(name, argv.confmap,
             outstack=outstack_name, outconf=outstackconf_name)
     logger.info('Extracting sources')
-    casutools.imcore(outstack_name, argv['--outname'], threshold=argv['--c_thresh'],
+    casutools.imcore(outstack_name, argv.outname, threshold=argv.c_thresh,
             confidence_map=outstackconf_name,
-            ellfile=argv['--create-ell'])
+            ellfile=argv.create_ell)
 
     logger.info('Catalogue complete')
     logger.info('Time taken: %s', datetime.now() - start)
